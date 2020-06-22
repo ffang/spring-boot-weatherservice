@@ -12,7 +12,7 @@ index f50ec84..3620299 100644
        
        try {
 diff --git a/src/main/resources/spring/camel-context.xml b/src/main/resources/spring/camel-context.xml
-index ad2a50c..e5d5065 100644
+index ad2a50c..f0acd67 100644
 --- a/src/main/resources/spring/camel-context.xml
 +++ b/src/main/resources/spring/camel-context.xml
 @@ -9,7 +9,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd         http
@@ -20,7 +20,7 @@ index ad2a50c..e5d5065 100644
  
      
 -    <cxf:cxfEndpoint address="http://${weather.service.host}:8283/WeatherService" wsdlURL="/wsdl/weatherprovider.wsdl" id="sts">
-+    <cxf:cxfEndpoint address="http://spring-boot-cxf-jaxws-openshift.192.168.64.90.nip.io/service/WeatherService" wsdlURL="/wsdl/weatherprovider.wsdl" id="sts">
++    <cxf:cxfEndpoint address="http://${weather.service.host}/service/WeatherService" wsdlURL="/wsdl/weatherprovider.wsdl" id="sts">
          <cxf:properties>
              <entry key="schema-validation-enabled" value="true"/>
          </cxf:properties>
