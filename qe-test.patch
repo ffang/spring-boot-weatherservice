@@ -1,0 +1,59 @@
+diff --git a/src/main/java/io/fabric8/quickstarts/camel/bridge/Application.java b/src/main/java/io/fabric8/quickstarts/camel/bridge/Application.java
+index f50ec84..3620299 100644
+--- a/src/main/java/io/fabric8/quickstarts/camel/bridge/Application.java
++++ b/src/main/java/io/fabric8/quickstarts/camel/bridge/Application.java
+@@ -24,7 +24,7 @@ import org.springframework.web.WebApplicationInitializer;
+ public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
+ 
+    public static void main(String[] args) {
+-      System.setProperty("weather.service.host", System.getProperty("weather.service.host", "localhost"));
++      System.setProperty("weather.service.host", System.getProperty("weather.service.host", "spring-boot-cxf-jaxws-openshift.192.168.64.90.nip.io"));
+       System.setProperty("sso.server", System.getProperty("sso.server", "http://localhost:8180"));
+       
+       try {
+diff --git a/src/main/resources/spring/camel-context.xml b/src/main/resources/spring/camel-context.xml
+index ad2a50c..e5d5065 100644
+--- a/src/main/resources/spring/camel-context.xml
++++ b/src/main/resources/spring/camel-context.xml
+@@ -9,7 +9,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd         http
+     <bean id="getBodyProcessor" class="io.fabric8.quickstarts.camel.bridge.processor.GetBodyProcessor" />
+ 
+     
+-    <cxf:cxfEndpoint address="http://${weather.service.host}:8283/WeatherService" wsdlURL="/wsdl/weatherprovider.wsdl" id="sts">
++    <cxf:cxfEndpoint address="http://spring-boot-cxf-jaxws-openshift.192.168.64.90.nip.io/service/WeatherService" wsdlURL="/wsdl/weatherprovider.wsdl" id="sts">
+         <cxf:properties>
+             <entry key="schema-validation-enabled" value="true"/>
+         </cxf:properties>
+diff --git a/src/test/java/io/fabric8/quickstarts/camel/bridge/IntegrationTest.java b/src/test/java/io/fabric8/quickstarts/camel/bridge/IntegrationTest.java
+index 93f0914..df496c2 100644
+--- a/src/test/java/io/fabric8/quickstarts/camel/bridge/IntegrationTest.java
++++ b/src/test/java/io/fabric8/quickstarts/camel/bridge/IntegrationTest.java
+@@ -83,8 +83,8 @@ public class IntegrationTest {
+     static String CAMEL_ROUTE_HOST = System
+         .getProperty("camel.route.host", "http://localhost:8080");
+     static String JAXRS_URL = CAMEL_ROUTE_HOST + "/camelcxf/jaxrs";
+-    static String WEATHER_HOST = System.getProperty("weather.service.host", "localhost");
+-    static String JAXWS_URI_STS = "http://" + WEATHER_HOST + ":8283/WeatherService";
++    static String WEATHER_HOST = System.getProperty("weather.service.host", "spring-boot-cxf-jaxws-openshift.192.168.64.90.nip.io");
++    static String JAXWS_URI_STS = "http://" + WEATHER_HOST + "/service/WeatherService";
+ 
+     static QName SERVICE_QNAME = new QName("http://ibm.com/wdata", "weatherService");
+     static String SSO_URL = System.getProperty("sso.server", "http://localhost:8180");
+@@ -95,7 +95,7 @@ public class IntegrationTest {
+     @BeforeClass
+     public static void beforeClass() {
+         System.setProperty("javax.net.ssl.trustStore", "./src/main/resources/openshiftcerts"); 
+-        Object implementor = new WeatherPortImpl();
++        /*Object implementor = new WeatherPortImpl();
+ 
+       
+ 
+@@ -108,7 +108,7 @@ public class IntegrationTest {
+ 
+         impl.getInInterceptors().add(new WSS4JInInterceptor(inProps));
+         impl.getInInterceptors().add(new LoggingInInterceptor());
+-        impl.getOutInterceptors().add(new LoggingOutInterceptor());
++        impl.getOutInterceptors().add(new LoggingOutInterceptor());*/
+     }
+ 
+     @BeforeClass
